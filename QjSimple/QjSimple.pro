@@ -45,12 +45,10 @@ LIBS += -llibpjproject-i386-Win32-vc8-Debug
 
 # FFMPEG Libs.
 LIBS += -L../ffmpeg/lib
+LIBS += -L../BaseClasses/lib
 
 # SDL Libs.
 LIBS += -L../SDL/lib
-
-# SDL Libs.
-LIBS += -L../BaseClasses/lib
 
 # Windows Libs.
 LIBS += -lws2_32
