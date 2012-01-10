@@ -20,7 +20,6 @@
 #include "qjsimple.h"
 #include "addbuddydialog.h"
 #include "accountdialog.h"
-//#include "PjCallback.h"
 
 extern "C" {
 #include <pjlib.h>
@@ -41,7 +40,7 @@ extern "C" {
 
 
 /* global callback/logger object */
-extern void *globalPjCallback;
+extern PjCallback *globalPjCallback;
 
 /* global structures for pjsip config */
 pjsua_config cfg;
