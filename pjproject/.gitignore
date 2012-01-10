@@ -1,0 +1,5 @@
+*.vcproj*
+output/
+bin/
+lib/
+vc90*
