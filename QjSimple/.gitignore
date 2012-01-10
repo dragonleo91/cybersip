@@ -1,0 +1,15 @@
+Makefile*
+
+# Qt Creator
+QjSimple.pro.user*
+
+# VS 2008
+QjSimple.sln*
+QjSimple.ncb
+QjSimple.suo
+QjSimple.vcproj*
+vc90*
+
+# bin dir
+debug/
+release/
