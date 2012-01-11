@@ -1209,6 +1209,14 @@ int QjSimple::initializePjSip() {
 		acc_cfg.srtp_secure_signaling = 2;
 	}
 
+    // Video Settings.
+    acc_cfg.vid_in_auto_show = PJ_TRUE;
+    acc_cfg.vid_out_auto_transmit = PJ_TRUE;
+    acc_cfg.vid_cap_dev = PJMEDIA_VID_DEFAULT_CAPTURE_DEV;
+    acc_cfg.vid_rend_dev = PJMEDIA_VID_DEFAULT_RENDER_DEV;
+    acc_cfg.vid_wnd_flags = PJMEDIA_VID_DEV_WND_BORDER |
+                            PJMEDIA_VID_DEV_WND_RESIZABLE;
+
 	status = pjsua_acc_add(&acc_cfg, PJ_TRUE, &acc_id);
 	if (status != PJ_SUCCESS) {
 		QMessageBox::StandardButton ret;
