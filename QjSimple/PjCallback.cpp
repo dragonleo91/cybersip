@@ -238,6 +238,30 @@ void PjCallback::on_call_media_state(pjsua_call_id call_id) {
 		// When media is active, connect call to sound device.
 		pjsua_conf_connect(ci.conf_slot, 0);
 		pjsua_conf_connect(0, ci.conf_slot);
+
+        // Show all windows.
+        {
+
+        pjsua_vid_win_id wids[PJSUA_MAX_VID_WINS];
+        unsigned i;
+        unsigned cnt = PJ_ARRAY_SIZE(wids);
+
+        pjsua_vid_enum_wins(wids, &cnt);
+        PJ_LOG(3,(THIS_FILE, "Found %d video windows:", cnt));
+        PJ_LOG(3,(THIS_FILE, "WID show    pos       size"));
+        PJ_LOG(3,(THIS_FILE, "------------------------------"));
+        for (i = 0; i < cnt; ++i) {
+            pjsua_vid_win_info wi;
+            pjsua_vid_win_get_info(wids[i], &wi);
+            PJ_LOG(3,(THIS_FILE, "%3d   %c  (%d,%d)  %dx%d",
+                wids[i], (wi.show?'Y':'N'), wi.pos.x, wi.pos.y,
+                wi.size.w, wi.size.h));
+
+            pjsua_vid_win_set_show(wids[i], PJ_TRUE);
+        }
+
+        }
+
 		break;
 	case PJSUA_CALL_MEDIA_LOCAL_HOLD:
 		PJ_LOG(3,(THIS_FILE, "on_call_media_state: call_id %d: "
