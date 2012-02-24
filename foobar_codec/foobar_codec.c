@@ -322,7 +322,30 @@ static pj_status_t foobar_default_attr( pjmedia_vid_codec_factory *factory,
 
     pj_bzero(attr, sizeof(pjmedia_vid_codec_param));
 
-    return PJ_FALSE;
+    // Setup pjmedia_vid_codec_param.
+    attr->dir = foobar_codec_info.dir;
+    attr->packing = foobar_codec_info.packings;
+
+    //TODO: tune.
+#define _FOOBAR_ENCODE_WIDTH 320
+#define _FOOBAR_ENCODE_HEIGHT 320
+    pjmedia_format_init_video(&attr->enc_fmt, foobar_codec_info.fmt_id,
+            _FOOBAR_ENCODE_WIDTH, _FOOBAR_ENCODE_HEIGHT,
+            (int) foobar_codec_info.fps, (int) foobar_codec_info.fps);
+    pjmedia_format_init_video(&attr->dec_fmt,
+            foobar_codec_info.dec_fmt_id[0],
+            _FOOBAR_ENCODE_WIDTH, _FOOBAR_ENCODE_HEIGHT,
+            (int) foobar_codec_info.fps, (int) foobar_codec_info.fps);
+
+    attr->enc_mtu = PJMEDIA_MAX_MTU;
+
+    // Init fmtp.
+    attr->enc_fmtp.cnt = 0;
+    attr->dec_fmtp.cnt = 0;
+
+    attr->ignore_fmtp = PJ_FALSE;
+
+    return PJ_TRUE;
 }
 
 /*
