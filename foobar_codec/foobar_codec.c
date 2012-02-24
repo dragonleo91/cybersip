@@ -181,7 +181,7 @@ static struct pjmedia_vid_codec_info foobar_codec_info =
 static struct pjmedia_vid_codec_info foobar_codec_info =
 {
     /* .fmt_id = */PJMEDIA_FORMAT_foobar_ARRAY,
-    /* .pt = */PJMEDIA_RTP_PT_foobar,
+    /* .pt = */PJMEDIA_RTP_PT_foobar+20,
     /* .encoding_name = */{"foobar", 6},
     /* .encoding_desc = */{"Private Demo Codec, v1", 22},
     /* .clock_rate = */90000,
