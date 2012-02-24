@@ -162,7 +162,7 @@ static struct pjmedia_vid_codec_info foobar_codec_info =
     .fmt_id = PJMEDIA_FORMAT_foobar_ARRAY,
     .pt = PJMEDIA_RTP_PT_foobar,
     .encoding_name = {"foobar", 6},
-    .encoding_desc = {"Private Demo Codec, v1", 21},
+    .encoding_desc = {"Private Demo Codec, v1", 22},
     .clock_rate = 0,
     .dir = PJMEDIA_DIR_ENCODING | PJMEDIA_DIR_DECODING,
     // TODO: support PJMEDIA_FORMAT_RGB24 & PJMEDIA_FORMAT_foobar_GL
@@ -183,7 +183,7 @@ static struct pjmedia_vid_codec_info foobar_codec_info =
     /* .fmt_id = */PJMEDIA_FORMAT_foobar_ARRAY,
     /* .pt = */PJMEDIA_RTP_PT_foobar,
     /* .encoding_name = */{"foobar", 6},
-    /* .encoding_desc = */{"Private Demo Codec, v1", 21},
+    /* .encoding_desc = */{"Private Demo Codec, v1", 22},
     /* .clock_rate = */0,
     /* .dir = */PJMEDIA_DIR_ENCODING | PJMEDIA_DIR_DECODING,
     // TODO: support PJMEDIA_FORMAT_RGB24 & PJMEDIA_FORMAT_foobar_GL
