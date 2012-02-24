@@ -300,7 +300,7 @@ static pj_status_t foobar_test_alloc(
     // Support any directions.
     if ((info->fmt_id == foobar_codec_info.fmt_id) &&
         (info->pt == foobar_codec_info.pt) &&
-        (info->packings == info->packings)) {
+        (info->packings == foobar_codec_info.packings)) {
 
         return PJ_SUCCESS;
     }
