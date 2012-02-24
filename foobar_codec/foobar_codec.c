@@ -385,7 +385,7 @@ static pj_status_t foobar_alloc_codec(
     PJ_ASSERT_RETURN(factory == &foobar_codec_factory, PJ_EINVAL);
     PJ_ASSERT_RETURN(&foobar_codec_factory.factory_data, PJ_EINVAL);
 
-    afd = (foobar_factory_data *) &foobar_codec_factory.factory_data;
+    afd = (foobar_factory_data *) foobar_codec_factory.factory_data;
 
     // Alloc pool for pjmedia_vid_codec.
     pool = pj_pool_create(afd->pool_factory,
