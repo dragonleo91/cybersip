@@ -345,7 +345,7 @@ static pj_status_t foobar_default_attr( pjmedia_vid_codec_factory *factory,
 
     attr->ignore_fmtp = PJ_FALSE;
 
-    return PJ_TRUE;
+    return PJ_SUCCESS;
 }
 
 /*
