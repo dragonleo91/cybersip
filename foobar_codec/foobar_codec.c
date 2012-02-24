@@ -189,14 +189,14 @@ static struct pjmedia_vid_codec_info foobar_codec_info =
     // TODO: support PJMEDIA_FORMAT_RGB24 & PJMEDIA_FORMAT_foobar_GL
     // lesser than PJMEDIA_VID_CODEC_MAX_DEC_FMT_CNT=8
     /* .dec_fmt_id_cnt = */1,
-    /* .dec_fmt_id[0] = */PJMEDIA_FORMAT_YUY2,
+    /* .dec_fmt_id[0] = */{ PJMEDIA_FORMAT_YUY2, },
     /* No RTP segements required,
      * the encoded data is even smaller than audio */
     /* .packings = */PJMEDIA_VID_PACKING_PACKETS,
     // TODO: what fps use.
     // lesser than PJMEDIA_VID_CODEC_MAX_FPS_CNT=16
     /* .fps_cnt = */1,
-    /* .fps[0] = */15,
+    /* .fps[0] = */{15, },
 };
 #endif
 
