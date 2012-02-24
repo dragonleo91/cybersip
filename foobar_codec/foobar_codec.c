@@ -16,7 +16,7 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#define PJMEDIA_HAS_foobar_CODEC 1
+#define PJMEDIA_HAS_FOOBAR_CODEC 1
 
 #include <pj/assert.h>
 #include <pj/log.h>
@@ -27,19 +27,12 @@
 #include <pjmedia/format.h>
 #include <pjmedia/errno.h>
 
-#if defined(PJMEDIA_HAS_foobar_CODEC) && PJMEDIA_HAS_foobar_CODEC != 0 && \
+#if defined(PJMEDIA_HAS_FOOBAR_CODEC) && PJMEDIA_HAS_FOOBAR_CODEC != 0 && \
     defined(PJMEDIA_HAS_VIDEO) && (PJMEDIA_HAS_VIDEO != 0)
 
 #include "foobar_codec.h"
 
 #define THIS_FILE   "foobar_codec.c"
-
-/* Trace the method invoked, for debugging only */
-#if __gcc__
-#define TRACE_FUNC() PJ_LOG(3,(THIS_FILE, __func__))
-#else
-#define TRACE_FUNC() 
-#endif
 
 /* Prototypes for foobar codecs factory */
 static pj_status_t foobar_test_alloc(pjmedia_vid_codec_factory *factory,
@@ -140,8 +133,10 @@ static pjmedia_vid_codec_factory foobar_codec_factory;
 static pj_caching_pool caching_pool;
 
 /* Definition for foobar codec format ID */
-#define PJMEDIA_FORMAT_foobar_ARRAY  \
-            PJMEDIA_FORMAT_PACK('A', 'R' ,'A', 'Y')
+#define PJMEDIA_FORMAT_FOOBAR  \
+            PJMEDIA_FORMAT_PACK('F', 'B' ,'A', 'R')
+
+#define MEMBER(m)
 
 /**
  * Definition for foobar codec RTP Payload Type.
@@ -153,52 +148,24 @@ static pj_caching_pool caching_pool;
  * @see pjmedia-codec/types.h
  */
 //enum pjmedia_video_pt PJMEDIA_RTP_PT_foobar = PJMEDIA_RTP_PT_DYNAMIC;
-#define PJMEDIA_RTP_PT_foobar   PJMEDIA_RTP_PT_DYNAMIC
+#define PJMEDIA_RTP_PT_FOOBAR   PJMEDIA_RTP_PT_DYNAMIC + 20
 
-/* Definition for foobar codec info, need C99 */
-#if __STDC_VERSION__ >= 199901L
 static struct pjmedia_vid_codec_info foobar_codec_info =
 {
-    .fmt_id = PJMEDIA_FORMAT_foobar_ARRAY,
-    .pt = PJMEDIA_RTP_PT_foobar,
-    .encoding_name = {"foobar", 6},
-    .encoding_desc = {"Private Demo Codec, v1", 22},
-    .clock_rate = 90000,
-    .dir = PJMEDIA_DIR_ENCODING | PJMEDIA_DIR_DECODING,
+    MEMBER(fmt_id) PJMEDIA_FORMAT_FOOBAR,
+    MEMBER(pt) PJMEDIA_RTP_PT_FOOBAR,
+    MEMBER(encoding_name) { "FOOBAR", 6},
+    MEMBER(encoding_desc) {"Private Demo Codec, v1", 22},
+    MEMBER(clock_rate) 90000,
+    MEMBER(dir) PJMEDIA_DIR_ENCODING_DECODING,
     // TODO: support PJMEDIA_FORMAT_RGB24 & PJMEDIA_FORMAT_foobar_GL
-    // lesser than PJMEDIA_VID_CODEC_MAX_DEC_FMT_CNT=8
-    .dec_fmt_id_cnt = 1,
-    .dec_fmt_id[0] = PJMEDIA_FORMAT_RGB24,
-    /* No RTP segements required,
-     * the encoded data is even smaller than audio */
-    .packings = PJMEDIA_VID_PACKING_PACKETS,
+    MEMBER(dec_fmt_id_cnt) 1,
+    MEMBER(dec_fmt_id) { PJMEDIA_FORMAT_RGB24 },
+    MEMBER(packings) PJMEDIA_VID_PACKING_PACKETS,
+    MEMBER(fps_cnt) 1,
     // TODO: what fps use.
-    // lesser than PJMEDIA_VID_CODEC_MAX_FPS_CNT=16
-    .fps_cnt = 1,
-    .fps[0] = 15,
-}
-#else
-static struct pjmedia_vid_codec_info foobar_codec_info =
-{
-    /* .fmt_id = */PJMEDIA_FORMAT_foobar_ARRAY,
-    /* .pt = */PJMEDIA_RTP_PT_foobar+20,
-    /* .encoding_name = */{"foobar", 6},
-    /* .encoding_desc = */{"Private Demo Codec, v1", 22},
-    /* .clock_rate = */90000,
-    /* .dir = */PJMEDIA_DIR_ENCODING | PJMEDIA_DIR_DECODING,
-    // TODO: support PJMEDIA_FORMAT_RGB24 & PJMEDIA_FORMAT_foobar_GL
-    // lesser than PJMEDIA_VID_CODEC_MAX_DEC_FMT_CNT=8
-    /* .dec_fmt_id_cnt = */1,
-    /* .dec_fmt_id[0] = */{ PJMEDIA_FORMAT_YUY2, },
-    /* No RTP segements required,
-     * the encoded data is even smaller than audio */
-    /* .packings = */PJMEDIA_VID_PACKING_PACKETS,
-    // TODO: what fps use.
-    // lesser than PJMEDIA_VID_CODEC_MAX_FPS_CNT=16
-    /* .fps_cnt = */1,
-    /* .fps[0] = */{15, },
+    MEMBER(fps) { { 15, 15 } },
 };
-#endif
 
 /**
  * Initialize and register foobar codec factory to pjmedia endpoint.
@@ -315,8 +282,6 @@ static pj_status_t foobar_default_attr( pjmedia_vid_codec_factory *factory,
         const pjmedia_vid_codec_info *info,
         pjmedia_vid_codec_param *attr)
 {
-    TRACE_FUNC();
-
     PJ_ASSERT_RETURN(factory==&foobar_codec_factory, PJ_EINVAL);
     PJ_ASSERT_RETURN(info && attr, PJ_EINVAL);
 
@@ -446,8 +411,6 @@ static pj_status_t foobar_dealloc_codec(
 static pj_status_t foobar_codec_init( pjmedia_vid_codec *codec,
         pj_pool_t *pool )
 {
-    TRACE_FUNC();
-
     PJ_UNUSED_ARG(codec);
     PJ_UNUSED_ARG(pool);
 
@@ -460,8 +423,6 @@ static pj_status_t foobar_codec_init( pjmedia_vid_codec *codec,
 static pj_status_t foobar_codec_open( pjmedia_vid_codec *codec,
         pjmedia_vid_codec_param *attr )
 {
-    TRACE_FUNC();
-
     return PJ_SUCCESS;
 }
 
@@ -470,8 +431,6 @@ static pj_status_t foobar_codec_open( pjmedia_vid_codec *codec,
  */
 static pj_status_t foobar_codec_close( pjmedia_vid_codec *codec )
 {
-    TRACE_FUNC();
-
     return PJ_SUCCESS;
 }
 
@@ -481,16 +440,12 @@ static pj_status_t foobar_codec_close( pjmedia_vid_codec *codec )
 static pj_status_t foobar_codec_modify( pjmedia_vid_codec *codec,
         const pjmedia_vid_codec_param *attr)
 {
-    TRACE_FUNC();
-
     return PJ_ENOTSUP;
 }
 
 static pj_status_t foobar_codec_get_param(pjmedia_vid_codec *codec,
         pjmedia_vid_codec_param *param)
 {
-    TRACE_FUNC();
-
     return PJ_SUCCESS;
 }
 
@@ -502,8 +457,6 @@ static pj_status_t foobar_codec_encode_whole(pjmedia_vid_codec *codec,
         unsigned output_buf_len,
         pjmedia_frame *output)
 {
-    TRACE_FUNC();
-
     return PJ_SUCCESS;
 }
 
@@ -515,11 +468,10 @@ static pj_status_t foobar_codec_encode_begin(
         pjmedia_frame *output,
         pj_bool_t *has_more)
 {
-    TRACE_FUNC();
+    int size = 1;
 
-    // Duplicate input to output.
-    pj_memcpy(output->buf, input->buf, input->size);
-    output->size = input->size;
+    pj_memcpy(output->buf, input->buf, size);
+    output->size = size;
 
     if (has_more) *has_more = PJ_FALSE;
 
@@ -531,22 +483,8 @@ static pj_status_t foobar_codec_encode_more(pjmedia_vid_codec *codec,
         pjmedia_frame *output,
         pj_bool_t *has_more)
 {
-    TRACE_FUNC();
-
-    if (has_more) *has_more = PJ_FALSE;
-
-    return PJ_SUCCESS;
-}
-
-/*
- * Decode frame.
- */
-static pj_status_t foobar_codec_decode_whole(pjmedia_vid_codec *codec,
-        const pjmedia_frame *input,
-        unsigned output_buf_len,
-        pjmedia_frame *output)
-{
-    TRACE_FUNC();
+    output->size = 0;
+    *has_more = PJ_FALSE;
 
     return PJ_SUCCESS;
 }
@@ -557,7 +495,7 @@ static pj_status_t foobar_codec_decode( pjmedia_vid_codec *codec,
         unsigned out_size,
         pjmedia_frame *output)
 {
-    TRACE_FUNC();
+    output->size = 0;
 
     return PJ_SUCCESS;
 }
