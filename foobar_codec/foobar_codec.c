@@ -161,7 +161,7 @@ static struct pjmedia_vid_codec_info foobar_codec_info =
     MEMBER(packings) PJMEDIA_VID_PACKING_PACKETS,
     MEMBER(fps_cnt) 1,
     // TODO: what fps use.
-    MEMBER(fps) { { 15, 15 } },
+    MEMBER(fps) { { 15, 1 } },
 };
 
 /**
@@ -297,11 +297,11 @@ static pj_status_t foobar_default_attr( pjmedia_vid_codec_factory *factory,
 #define _FOOBAR_ENCODE_HEIGHT 320
     pjmedia_format_init_video(&attr->enc_fmt, foobar_codec_info.fmt_id,
             _FOOBAR_ENCODE_WIDTH, _FOOBAR_ENCODE_HEIGHT,
-            (int) foobar_codec_info.fps, (int) foobar_codec_info.fps);
+            foobar_codec_info.fps[0].num, foobar_codec_info.fps[0].denum);
     pjmedia_format_init_video(&attr->dec_fmt,
             foobar_codec_info.dec_fmt_id[0],
             _FOOBAR_ENCODE_WIDTH, _FOOBAR_ENCODE_HEIGHT,
-            (int) foobar_codec_info.fps, (int) foobar_codec_info.fps);
+            foobar_codec_info.fps[0].num, foobar_codec_info.fps[0].denum);
 
     attr->enc_mtu = PJMEDIA_MAX_MTU;
 
