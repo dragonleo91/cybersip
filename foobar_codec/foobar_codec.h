@@ -15,11 +15,18 @@
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef __PJMEDIA_CODECS_foobar_H__
-#define __PJMEDIA_CODECS_foobar_H__
+#ifndef __PJMEDIA_CODECS_FOOBAR_H__
+#define __PJMEDIA_CODECS_FOOBAR_H__
 
 #include <pjmedia-codec/types.h>
 #include <pjmedia/vid_codec.h>
+
+/* Definition for foobar codec encoded format ID */
+#define PJMEDIA_FORMAT_FOOBAR  \
+            PJMEDIA_FORMAT_PACK('F', 'B' ,'A', 'R')
+
+#define PJMEDIA_FORMAT_FOOBAR_RENDERER  \
+            PJMEDIA_FORMAT_PACK('F', 'B' ,'R', 'D')
 
 PJ_BEGIN_DECL
 
@@ -31,4 +38,4 @@ PJ_DECL(pj_status_t) pjmedia_vid_codec_foobar_init();
 
 PJ_END_DECL
 
-#endif /* __PJMEDIA_CODECS_foobar_H__ */
+#endif /* __PJMEDIA_CODECS_FOOBAR_H__ */

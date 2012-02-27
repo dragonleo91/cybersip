@@ -132,10 +132,6 @@ static pjmedia_vid_codec_factory foobar_codec_factory;
 /* Definition for simple pool factory. */
 static pj_caching_pool caching_pool;
 
-/* Definition for foobar codec format ID */
-#define PJMEDIA_FORMAT_FOOBAR  \
-            PJMEDIA_FORMAT_PACK('F', 'B' ,'A', 'R')
-
 #define MEMBER(m)
 
 /**
