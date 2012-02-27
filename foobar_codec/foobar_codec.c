@@ -30,6 +30,7 @@
 #if defined(PJMEDIA_HAS_FOOBAR_CODEC) && PJMEDIA_HAS_FOOBAR_CODEC != 0 && \
     defined(PJMEDIA_HAS_VIDEO) && (PJMEDIA_HAS_VIDEO != 0)
 
+#include "foobar_format.h"
 #include "foobar_codec.h"
 
 #define THIS_FILE   "foobar_codec.c"
@@ -156,7 +157,7 @@ static struct pjmedia_vid_codec_info foobar_codec_info =
     MEMBER(dir) PJMEDIA_DIR_ENCODING_DECODING,
     // TODO: support PJMEDIA_FORMAT_RGB24 & PJMEDIA_FORMAT_foobar_GL
     MEMBER(dec_fmt_id_cnt) 1,
-    MEMBER(dec_fmt_id) { PJMEDIA_FORMAT_RGB24 },
+    MEMBER(dec_fmt_id) { PJMEDIA_FORMAT_FOOBAR_RENDERER },
     MEMBER(packings) PJMEDIA_VID_PACKING_PACKETS,
     MEMBER(fps_cnt) 1,
     // TODO: what fps use.
@@ -174,6 +175,10 @@ PJ_DEF(pj_status_t) pjmedia_vid_codec_foobar_init()
     pj_pool_t *pool;
     pj_status_t status;
     foobar_factory_data *afd;
+
+    // Init format.
+    status = pjmedia_vid_format_foobar_init();
+    if (status != PJ_SUCCESS) return PJ_EINVAL;
 
     // Get Codec Manager instance.
     mgr = pjmedia_vid_codec_mgr_instance();
