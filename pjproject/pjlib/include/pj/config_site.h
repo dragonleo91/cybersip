@@ -19,9 +19,21 @@
 // Configuration for M$ Windows.
 #if defined(PJ_WIN32) && PJ_WIN32 != 0
 
+// Enable Video function.
 #define PJMEDIA_HAS_VIDEO    1
+
+// FFMPEG provide h263/h263+/h264 codec,
+// and don't need external libx264 for lastest(2012-2-7) ffmpeg.
 #define PJMEDIA_HAS_FFMPEG    1
+
+// Renderer dev depends on SDL.
 #define PJMEDIA_VIDEO_DEV_HAS_SDL   1
+
+// Capture dev depends on DirectShow.
 #define PJMEDIA_VIDEO_DEV_HAS_DSHOW 1
+
+// Enable H264,
+// H264 is disabled by default(pjmedia/include/pjmedia-codec/config.h).
+#define PJMEDIA_HAS_FFMPEG_CODEC_H264 1
 
 #endif
